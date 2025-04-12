@@ -167,3 +167,9 @@ resource "aws_lb" "ELB-public" {
   enable_deletion_protection = true
 }
 
+resource "aws_lb_target_group" "webservers" {
+  name     = "webservers"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.demo.id
+}
