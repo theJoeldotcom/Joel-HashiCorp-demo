@@ -180,7 +180,7 @@ resource "aws_lb_target_group_attachment" "target-group-attachment" {
   port             = 80
 }
 
-resource "aws_lb_target_group_attachment" "target-group-attachment" {
+resource "aws_lb_target_group_attachment" "target-group-attachment2" {
   target_group_arn = aws_lb_target_group.webservers.arn
   target_id        = aws_instance.webserver2.id
   port             = 80
