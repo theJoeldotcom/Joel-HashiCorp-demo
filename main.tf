@@ -106,6 +106,10 @@ resource "aws_instance" "webserver" {
   ami = "ami-0a9841b43a830391e"
   instance_type = "t3a.small"
   key_name = "AWS-dev"
-  subnet_id = "subnet-07090382ff9e09e31"
+  subnet_id = aws_subnet.public.id
+  security_group_id = [aws_security_group.web.id]
+  tags = {
+    Name = "Webserver"
+  }
 #  vpc_security_group_ids = 
 }
