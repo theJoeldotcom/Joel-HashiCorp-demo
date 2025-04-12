@@ -107,7 +107,7 @@ resource "aws_instance" "webserver" {
   instance_type = "t3a.small"
   key_name = "AWS-dev"
   subnet_id = aws_subnet.public.id
-  security_group_id = [aws_security_group.web.id]
+  vpc_security_group_id = [aws_security_group.web.id]
   tags = {
     Name = "Webserver"
   }
