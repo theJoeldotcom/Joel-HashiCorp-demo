@@ -112,6 +112,7 @@ resource "aws_instance" "webserver" {
   tags = {
     Name = "Webserver"
   }
+}
 
 #ELB
 
@@ -124,4 +125,4 @@ resource "aws_lb" "ELB_public" {
 
   enable_deletion_protection = true
 }
-}
+
