@@ -89,6 +89,11 @@ resource "aws_route_table_association" "public-route" {
   route_table_id = aws_route_table.route.id
 }
 
+resource "aws_route_table_association" "public-route" {
+  subnet_id      = aws_subnet.public2.id
+  route_table_id = aws_route_table.route.id
+}
+
 #Scurity groups
 
 resource "aws_security_group" "web" {
