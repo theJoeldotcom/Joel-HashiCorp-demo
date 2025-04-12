@@ -31,6 +31,14 @@ resource "aws_subnet" "public" {
   }
 }
 
+resource "aws_subnet" "public2" {
+  vpc_id = aws_vpc.demo.id
+  cidr_block = "10.0.3.0/24"
+  tags = {
+    Name = "public-2"
+  }
+}
+
 resource "aws_subnet" "private" {
   vpc_id = aws_vpc.demo.id
   cidr_block = "10.0.2.0/24"
@@ -40,6 +48,17 @@ resource "aws_subnet" "private" {
     }
 }
 
+resource "aws_subnet" "private2" {
+  vpc_id = aws_vpc.demo.id
+  cidr_block = "10.0.4.0/24"
+
+    tags = {
+      Name = "private-2"
+    }
+}
+
+
+#IGW
 resource "aws_internet_gateway" "demo-IGW" {
   vpc_id = aws_vpc.demo.id
 
@@ -114,6 +133,18 @@ resource "aws_instance" "webserver" {
   }
 }
 
+resource "aws_instance" "webserver2" {
+  ami = "ami-0a9841b43a830391e"
+  instance_type = "t3a.small"
+  key_name = "AWS-dev"
+  subnet_id = aws_subnet.public2.id
+  vpc_security_group_ids = [aws_security_group.web.id]
+  associate_public_ip_address = true
+  tags = {
+    Name = "Webserver2"
+  }
+}
+
 #ELB
 
 resource "aws_lb" "ELB-public" {
@@ -121,7 +152,7 @@ resource "aws_lb" "ELB-public" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.web.id]
-  subnets            = [aws_subnet.public.id]
+  subnets            = [aws_subnet.public.id, aws_subnet.public2.id]
 
   enable_deletion_protection = true
 }
