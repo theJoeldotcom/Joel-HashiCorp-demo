@@ -112,5 +112,16 @@ resource "aws_instance" "webserver" {
   tags = {
     Name = "Webserver"
   }
-#  vpc_security_group_ids = 
+
+#ELB
+
+resource "aws_lb" "ELB_public" {
+  name               = "ELB_public"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.web.id]
+  subnets            = [for subnet in aws_subnet.public : subnet.id]
+
+  enable_deletion_protection = true
+}
 }
