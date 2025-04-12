@@ -13,6 +13,8 @@ provider "aws" {
   region = "us-west-2"
 }
 
+# VPC
+
 resource "aws_vpc" "demo" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "default"
@@ -22,10 +24,12 @@ resource "aws_vpc" "demo" {
   }
 }
 
+#Subnets
+
 resource "aws_subnet" "public" {
   vpc_id     = aws_vpc.demo.id
   cidr_block = "10.0.1.0/24"
-
+  availability_zone = "us-west-2b"
   tags = {
     Name = "public-1"
   }
@@ -34,6 +38,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "public2" {
   vpc_id = aws_vpc.demo.id
   cidr_block = "10.0.3.0/24"
+  availability_zone = "us-west-2c"
   tags = {
     Name = "public-2"
   }
@@ -42,8 +47,8 @@ resource "aws_subnet" "public2" {
 resource "aws_subnet" "private" {
   vpc_id = aws_vpc.demo.id
   cidr_block = "10.0.2.0/24"
-
-    tags = {
+  availability_zone = "us-west-2b"
+  tags = {
       Name = "private-1"
     }
 }
@@ -51,8 +56,8 @@ resource "aws_subnet" "private" {
 resource "aws_subnet" "private2" {
   vpc_id = aws_vpc.demo.id
   cidr_block = "10.0.4.0/24"
-
-    tags = {
+  availability_zone = "us-west-2c"
+  tags = {
       Name = "private-2"
     }
 }
