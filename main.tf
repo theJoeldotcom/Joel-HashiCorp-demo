@@ -116,8 +116,8 @@ resource "aws_instance" "webserver" {
 
 #ELB
 
-resource "aws_lb" "ELB_public" {
-  name               = "ELB_public"
+resource "aws_lb" "ELB-public" {
+  name               = "ELB-public"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.web.id]
