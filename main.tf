@@ -62,6 +62,35 @@ resource "aws_subnet" "private2" {
     }
 }
 
+#IGW
+
+resource "aws_internet_gateway" "demo-IGW" {
+  vpc_id = aws_vpc.demo.id
+
+  tags = {
+    Name = "demo-IGW"
+  }
+}
+
+#NAT Gateway
+
+resource "aws_nat_gateway" "demo-NATGW" {
+  allocation_id = aws_eip.EIP-NAT.id
+  subnet_id     = aws_subnet.public.id
+
+  tags = {
+    Name = "NAT-GW"
+  }
+
+  depends_on = [aws_internet_gateway.demo-IGW]
+}
+
+#EIP
+
+resource "aws_eip" "EIP-NAT" {
+  vpc = true
+}
+
 #Route Tables
 
 resource "aws_route_table" "route" {
@@ -107,36 +136,6 @@ resource "aws_route_table_association" "private-route2" {
   subnet_id   = aws_subnet.private2.id
   route_table_id = aws_route_table.private-route.id
 }
-
-#IGW
-
-resource "aws_internet_gateway" "demo-IGW" {
-  vpc_id = aws_vpc.demo.id
-
-  tags = {
-    Name = "demo-IGW"
-  }
-}
-
-#NAT Gateway
-
-resource "aws_nat_gateway" "demo-NATGW" {
-  allocation_id = aws_eip.EIP-NAT.id
-  subnet_id     = aws_subnet.public.id
-
-  tags = {
-    Name = "NAT-GW"
-  }
-
-  depends_on = [aws_internet_gateway.demo-IGW]
-}
-
-#EIP
-
-resource "aws_eip" "EIP-NAT" {
-  vpc = true
-}
-
 
 #Scurity groups
 
