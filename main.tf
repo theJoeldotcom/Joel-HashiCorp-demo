@@ -107,9 +107,7 @@ resource "aws_internet_gateway" "demo-IGW" {
 
 #EIP
 
-resource "aws_eip" "EIP-NAT" {
-  domain   = "vpc"
-}
+resource "aws_eip" "EIP-NAT"
 
 #NAT Gateway
 
