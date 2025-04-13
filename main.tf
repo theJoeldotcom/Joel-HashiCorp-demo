@@ -62,15 +62,7 @@ resource "aws_subnet" "private2" {
     }
 }
 
-
-#IGW
-resource "aws_internet_gateway" "demo-IGW" {
-  vpc_id = aws_vpc.demo.id
-
-  tags = {
-    Name = "demo-IGW"
-  }
-}
+#Route Tables
 
 resource "aws_route_table" "route" {
   vpc_id = aws_vpc.demo.id
@@ -92,6 +84,44 @@ resource "aws_route_table_association" "public-route" {
 resource "aws_route_table_association" "public-route2" {
   subnet_id      = aws_subnet.public2.id
   route_table_id = aws_route_table.route.id
+}
+
+resource "aws_route_table" "private-route" {
+  vpc_id = aws_vpc.demo.id
+
+  route {
+
+  }
+}
+
+
+#IGW
+
+resource "aws_internet_gateway" "demo-IGW" {
+  vpc_id = aws_vpc.demo.id
+
+  tags = {
+    Name = "demo-IGW"
+  }
+}
+
+#EIP
+
+resource "aws_eip" "EIP-NAT" {
+  domain   = "vpc"
+}
+
+#NAT Gateway
+
+resource "aws_nat_gateway" "demo-NATGW" {
+  allocation_id = aws_eip.EIP-NAT.id
+  subnet_id     = aws_subnet.public.id
+
+  tags = {
+    Name = "NAT-GW"
+  }
+
+  depends_on = [aws_internet_gateway.demo-IGW]
 }
 
 #Scurity groups
@@ -197,11 +227,14 @@ resource "aws_lb_listener" "public-listener" {
   }
 }
 
+/*
 resource "aws_s3_bucket" "demo-bucket" {
-  bucket = "thejoel-hashicorp-test"
+  bucket = "thejoel-hashicorp-demo"
 
   tags = {
-    Name        = "test_bucket"
-    Environment = "test"
+    Name        = "demo-bucket"
+    Environment = "demo"
   }
 }
+*/
+
