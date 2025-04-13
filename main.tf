@@ -90,10 +90,23 @@ resource "aws_route_table" "private-route" {
   vpc_id = aws_vpc.demo.id
 
   route {
-
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = nat_gateway_id.demo-NATGW.id
+  }
+  tags = {
+    Name = "Private route"
   }
 }
 
+resource "aws_route_table_association" "private-route" {
+  subnet_id   = aws_subnet.private.id
+  route_table_id = aws_route_table.private-route.id
+}
+
+resource "aws_route_table_association" "private-route2" {
+  subnet_id   = aws_subnet.private2.id
+  route_table_id = aws_route_table.private-route.id
+}
 
 #IGW
 
