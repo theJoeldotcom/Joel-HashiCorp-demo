@@ -107,7 +107,7 @@ resource "aws_internet_gateway" "demo-IGW" {
 
 #EIP
 
-resource "aws_eip" "EIP-NAT"
+resource "aws_eip" "EIP-NAT" {}
 
 #NAT Gateway
 
