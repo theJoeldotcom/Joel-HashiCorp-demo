@@ -164,7 +164,7 @@ resource "aws_lb" "ELB-public" {
   security_groups    = [aws_security_group.web.id]
   subnets            = [aws_subnet.public.id, aws_subnet.public2.id]
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 }
 
 resource "aws_lb_target_group" "webservers" {
@@ -194,5 +194,14 @@ resource "aws_lb_listener" "public-listener" {
   default_action {
     type            = "forward"
     target_group_arn = aws_lb_target_group.webservers.arn
+  }
+}
+
+resource "aws_s3_bucket" "demo-bucket" {
+  bucket = "thejoel-hashicorp-test"
+
+  tags = {
+    Name        = "test_bucket"
+    Environment = "test"
   }
 }
