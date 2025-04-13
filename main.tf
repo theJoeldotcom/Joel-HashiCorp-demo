@@ -176,7 +176,7 @@ resource "aws_lb_target_group" "webservers" {
 
 resource "aws_lb_target_group_attachment" "target-group-attachment" {
   target_group_arn = aws_lb_target_group.webservers.arn
-  target_id        = [aws_instance.webserver.id]
+  target_id        = aws_instance.webserver.id
   port             = 80
 }
 
