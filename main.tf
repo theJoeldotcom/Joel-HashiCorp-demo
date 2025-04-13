@@ -105,10 +105,6 @@ resource "aws_internet_gateway" "demo-IGW" {
   }
 }
 
-#EIP
-
-resource "aws_eip" "EIP-NAT" {}
-
 #NAT Gateway
 
 resource "aws_nat_gateway" "demo-NATGW" {
@@ -121,6 +117,13 @@ resource "aws_nat_gateway" "demo-NATGW" {
 
   depends_on = [aws_internet_gateway.demo-IGW]
 }
+
+#EIP
+
+resource "aws_eip" "EIP-NAT" {
+  vpc = true
+}
+
 
 #Scurity groups
 
