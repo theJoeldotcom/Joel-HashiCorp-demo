@@ -245,7 +245,7 @@ resource "aws_s3_bucket" "demo-bucket" {
   bucket = "thejoel-hashicorp-demo"
 
   tags = {
-    Name        = "demo-bucket"
+    Name        = "HashiCorp-demo-bucket"
     Environment = "demo"
   }
 }
