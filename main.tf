@@ -240,7 +240,7 @@ resource "aws_lb_listener" "public-listener" {
   }
 }
 
-/*
+
 resource "aws_s3_bucket" "demo-bucket" {
   bucket = "thejoel-hashicorp-demo"
 
@@ -249,5 +249,5 @@ resource "aws_s3_bucket" "demo-bucket" {
     Environment = "demo"
   }
 }
-*/
+
 
